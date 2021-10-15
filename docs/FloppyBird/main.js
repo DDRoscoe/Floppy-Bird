@@ -96,6 +96,7 @@ function update() {
   player.vel.y += G.FALLSPEED/60;
   if(input.isJustPressed) {
     player.vel.y = -G.JUMPHEIGHT;
+    play("laser");
   }
 
 
