@@ -5,14 +5,16 @@ Press [SPACE] to
   jump higher!
 `;
 
-
 const G = {
 	WIDTH: 150,
 	HEIGHT: 150,
   CENTERX: 75,
   CENTERY: 75,
 
-  GRASSBORDER: 110
+  GRASSBORDER: 110,
+
+  FALLSPEED: 3,
+  JUMPHEIGHT: 1.5,
 };
 
 
@@ -30,7 +32,8 @@ rrr
 
 /**
  * @typedef {{
- * pos: Vector
+ * pos: Vector,
+ * vel: Vector,
  * }} Player
  */
 
@@ -64,7 +67,8 @@ options = {
 function update() {
   if (!ticks) {
     player = {
-			pos: vec(G.WIDTH * 0.5 - 40, G.HEIGHT * 0.5 - 20)
+			pos: vec(G.WIDTH * 0.5 - 40, G.HEIGHT * 0.5 - 20),
+      vel: vec(0,G.FALLSPEED),
 		};
 
     stars = [];
@@ -87,6 +91,15 @@ function update() {
   color("green");
   box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER);
 
+  // simulate gravity
+  player.pos.y += player.vel.y;
+  player.vel.y += G.FALLSPEED/60;
+  if(input.isJustPressed) {
+    player.vel.y = -G.JUMPHEIGHT;
+  }
+
+
+  // render bird
   color("black");
-  char("a", player.pos); 
+  char("a", player.pos);
 }
