@@ -87,10 +87,21 @@ function update() {
     box(s.pos, 1);
   });
 
+  // render bird
+  color("black");
+  char("a", player.pos);
+
+
   // grass border
   color("green");
-  box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER);
-
+  //added collider with player
+  const isCollidingWithGrass = box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER).isColliding.char.a;
+  if(isCollidingWithGrass){
+    // if fall on grass, end game
+    console.log("hit")
+    end("You Died");
+  }
+  
   // simulate gravity
   player.pos.y += player.vel.y;
   player.vel.y += G.FALLSPEED/60;
@@ -98,9 +109,4 @@ function update() {
     player.vel.y = -G.JUMPHEIGHT;
     play("laser");
   }
-
-
-  // render bird
-  color("black");
-  char("a", player.pos);
 }
