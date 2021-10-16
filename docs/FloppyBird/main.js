@@ -97,6 +97,7 @@ function update() {
 
   // render bird
   color("black");
+  // add animation : flapping
   if(input.isPressed){
     char("a", player.pos);
   }else{
@@ -109,6 +110,8 @@ function update() {
   let grass = box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER)
   //added collider with player
   const isCollidingWithGrass = grass.isColliding.char.a||grass.isColliding.char.b;
+  //↑↑↑                                                ↑↑
+  //Since there are two characters, Make sure to check both of the collision -Larry
   if(isCollidingWithGrass){
     // if fall on grass, end game
     console.log("hit")
@@ -116,8 +119,13 @@ function update() {
   }
 
   // simulate gravity
-  player.pos.y += player.vel.y;
+  if(player.pos.y+player.vel.y>=0){//added boarder for the bird
+    player.pos.y += player.vel.y;
+  }else{
+    player.vel.y =0;               //now it won't fly out of the screen
+  }
   player.vel.y += G.FALLSPEED/60;
+
   if(input.isJustPressed) {
     player.vel.y = -G.JUMPHEIGHT;
     play("laser");
