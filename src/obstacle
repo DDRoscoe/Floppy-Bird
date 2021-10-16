@@ -1,0 +1,79 @@
+title = "hi";
+
+description = `
+`;
+
+characters = [];
+
+const G = {
+    WIDTH: 100,
+    HEIGHT: 150
+};
+
+options = {
+    viewSize: {x: G.WIDTH, y: G.HEIGHT}
+};
+
+/**
+* @typedef {{
+    * pos: Vector,
+    * speed: number
+    * }} Pipe
+    */
+    
+    /**
+    * @type  { Pipe [] }
+    */
+    let pipes;
+
+/**
+* @typedef {{
+    * pos: Vector,
+    * }} Hole
+    */
+    /**
+    * @type  { Pipe [] }
+    */
+    let holes;
+function update() {
+    let i = 0;
+    if (!ticks) {
+        pipes = times(3, () => {
+        const posX = 96 + i*40;
+        i++
+        const posY = 75;
+        return {
+            pos: vec(posX,posY),
+            speed: .15
+        };
+        });
+        i=0;
+        holes = times(3, () => {
+            const posX = 96 + i*40;
+            i++
+            const posY = Math.random() * 120;
+            return {
+                pos: vec(posX,posY),
+                speed: .15
+            };
+            });
+    }
+    pipes.forEach((s) => {
+        s.pos.x -= s.speed;
+        if(s.pos.x < 0)
+        {
+            s.pos.x = 120
+        }
+        color("green");
+        box(s.pos, 8, 150);
+    });
+    holes.forEach((s) => {
+        s.pos.x -= s.speed;
+        if(s.pos.x < 0)
+        {
+            s.pos.x = 120
+        }
+        color("white");
+        box(s.pos, 8, 40);
+    });
+}
