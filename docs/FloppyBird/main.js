@@ -26,6 +26,14 @@ characters = [
  rrbr
  rbr
 rrr
+`,
+`
+    r
+b  rry
+rbbrr
+ rrbr
+ rrr
+rrr
 `
 ];
 
@@ -68,7 +76,7 @@ function update() {
   if (!ticks) {
     player = {
 			pos: vec(G.WIDTH * 0.5 - 40, G.HEIGHT * 0.5 - 20),
-      vel: vec(0,G.FALLSPEED),
+      vel: vec(0,0),//I changed it to 0,because it falls too fast at beginning-Larry
 		};
 
     stars = [];
@@ -89,19 +97,24 @@ function update() {
 
   // render bird
   color("black");
-  char("a", player.pos);
+  if(input.isPressed){
+    char("a", player.pos);
+  }else{
+    char("b", player.pos);
+  }
 
 
   // grass border
   color("green");
+  let grass = box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER)
   //added collider with player
-  const isCollidingWithGrass = box(G.WIDTH / 2, G.HEIGHT, G.WIDTH, G.HEIGHT - G.GRASSBORDER).isColliding.char.a;
+  const isCollidingWithGrass = grass.isColliding.char.a||grass.isColliding.char.b;
   if(isCollidingWithGrass){
     // if fall on grass, end game
     console.log("hit")
     end("You Died");
   }
-  
+
   // simulate gravity
   player.pos.y += player.vel.y;
   player.vel.y += G.FALLSPEED/60;
