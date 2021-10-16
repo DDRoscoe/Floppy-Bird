@@ -97,7 +97,7 @@ function update() {
 
   // render bird
   color("black");
-  // add animation : flapping
+  // add animation : flapping -Larry
   if(input.isPressed){
     char("a", player.pos);
   }else{
@@ -119,7 +119,7 @@ function update() {
   }
 
   // simulate gravity
-  if(player.pos.y+player.vel.y>=0){//added boarder for the bird
+  if(player.pos.y+player.vel.y>=0){//added boarder for the bird -Larry
     player.pos.y += player.vel.y;
   }else{
     player.vel.y =0;               //now it won't fly out of the screen
